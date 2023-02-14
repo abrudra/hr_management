@@ -1,4 +1,5 @@
 const newsLetterController = require("../controller/newsLetterController");
+// const checkAuthMiddleware = require("../../middleware/checkAuth")
 
 const router = require("express").Router();
 

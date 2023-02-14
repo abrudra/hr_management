@@ -58,7 +58,7 @@ const loginServices = async (req, res) => {
           emp_email: user.emp_email,
           emp_pancard: user.emp_pancard,
         },
-        "secret"
+        process.env.JWT_KEY
       );
       res.status(200).json({
         message: "Authentication successful!",
