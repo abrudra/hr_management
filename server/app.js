@@ -13,9 +13,11 @@ const bodyParser = require("body-parser")
 
 
 const NewsLetterroutes = require("./home_page/routes/newsLetterRoutes");
+const userRoutes = require('./Login/Routes/userRoute')
 
 app.use(bodyParser.json());
 
 app.use("/api/newsLetter", NewsLetterroutes);
+app.use("/user", userRoutes);
 
 module.exports = app;
