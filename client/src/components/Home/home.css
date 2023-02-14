@@ -1,0 +1,17 @@
+.home-login-select {
+  padding: 30px;
+  background: #ececec;
+  display: flex;
+  justify-content: space-around;
+  column-gap: 1rem;
+}
+
+.hr-news {
+  padding: 20px;
+  background: #ececec;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+  row-gap: 2rem;
+}
