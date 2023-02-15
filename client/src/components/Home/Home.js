@@ -3,6 +3,7 @@ import { Card, Button, Divider } from "antd";
 import "./home.css";
 import * as API from "../../APIList";
 import Loading from "../Loader/Loading";
+import { NavLink } from "react-router-dom";
 
 const { Meta } = Card;
 
@@ -57,15 +58,21 @@ class Home extends Component {
             bordered={false}
             style={{
               width: 300,
-              marginTop: "5rem",  
+              marginTop: "5rem",
             }}
           >
-            <div style = {{
+            <div
+              style={{
                 display: "flex",
-                columnGap: "10%"}}
-               >
-              <Button type="dashed">Login</Button>
-              <Button type="dashed">Sign Up</Button>
+                columnGap: "10%",
+              }}
+            >
+              <NavLink to="/login">
+                <Button type="dashed">Login</Button>
+              </NavLink>
+              <NavLink to="/signup">
+                <Button type="dashed">Sign Up</Button>
+              </NavLink>
             </div>
           </Card>
         </div>
@@ -82,9 +89,9 @@ class Home extends Component {
                   style={{
                     width: 350,
                   }}
-                  cover={<img alt="example" src={item.image} />}
+                  cover={<img alt="example" src={item.imageUrl} />}
                 >
-                  <Meta title={item.title} description={item.discription} />
+                  <Meta title={item.title} description={item.description} />
                 </Card>
               );
             })

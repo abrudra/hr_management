@@ -22,9 +22,15 @@ const newsLetter = async (info, NewsLetter, res) => {
       imageUrl: info.imageUrl,
       author: info.author,
     });
-    res.status(200).send(newsletter);
+    res.status(200).json({
+      message: "Data created..!",
+      Data: newsletter,
+    });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({
+      message:"Something went wrong..! Failed to created Data.",
+      error: error,
+    })
   }
 };
 
@@ -33,7 +39,10 @@ const getAllNewsLetterService = async (req, res) => {
     const newsLetter = await NewsLetter.findAll({});
     res.status(200).send(newsLetter);
   } catch (error) {
-    res.status(500).send(error);
+     res.status(500).json({
+       message: "Something went wrong..! Failed to fetch Data.",
+       error: error,
+     });
   }
 };
 
@@ -43,7 +52,10 @@ const getSingleNewsLetterService = async (req, res) => {
     const newsLetter = await NewsLetter.findOne({ where: { id: id } });
     res.status(200).send(newsLetter);
   } catch {
-    res.status(500).send(error);
+     res.status(500).json({
+       message: "Something went wrong..! Failed to fetch Data.",
+       error: error,
+     });
   }
 };
 
@@ -60,19 +72,35 @@ const updateNewsLetterService = async (req, res) => {
     const newsLetter = await NewsLetter.update(req.body, {
       where: { id: id },
     });
-    res.status(200).send(newsLetter);
-  } catch {
-    res.status(500).send(error);
+    const newsLetters = await NewsLetter.findOne({where : {id:id}});
+    res.status(200).json({
+      message : "Data updated succesfully..!",
+     updateData : newsLetters,
+    });
+  } catch(error) {
+    res.status(500).json({
+      message : "Data not updated ..Something went wrong.!",
+      errorMessage: error.message,
+    });
   }
 };
 
 const deleteNewsLetterService = async (req, res) => {
   try {
     let id = req.params.id;
-    await NewsLetter.destroy({ where: { id: id } });
-    res.status(200).send("Newsletter is Deleted...!");
-  } catch {
-    res.status(500).send(+error);
+    const result = await NewsLetter.findOne({ where: { id: id } });
+    if (result === null) {
+      res.status(404).json({
+        message: "ID not found: " + id,
+      });
+    } else {
+      await NewsLetter.destroy({ where: { id: id } });
+      res.status(200).json({
+        message: "ID deleted succesfully: " + id,
+      });
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
   }
 };
 module.exports = {

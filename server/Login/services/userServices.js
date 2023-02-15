@@ -69,12 +69,14 @@ const loginServices = async (req, res) => {
         message: "Invalid credentials!",
       });
     }
+   
   } catch (error) {
     res.status(500).json({
       message: "Something went wrong!",
     });
+    console.log(error);
   }
-
+ 
   
 };
 

@@ -10,3 +10,31 @@ export const gettingAllNewsLetter = async () => {
     throw error;
   }
 };
+
+export const signUpEmployee = async (values) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:8081/user/signUp",
+      values
+    );
+    const data = response.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const loginEmployee = async (values) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:8081/user/login",
+      values
+    );
+    const data = response.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
