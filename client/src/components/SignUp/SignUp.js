@@ -9,7 +9,6 @@ class SignUp extends Component {
     super();
     this.state = {
       error: "",
-      showError: false,
     };
   }
   onFinish = async (values) => {
@@ -18,7 +17,6 @@ class SignUp extends Component {
       console.log(data);
        this.props.history.push("/login");
     } catch (error) {
-        console.log(error)
       this.setState({
         error: error.response.data.message
       });
@@ -41,6 +39,13 @@ class SignUp extends Component {
         >
           <Card>
             <h1>Sign Up</h1>
+            {error && (
+              <Alert
+                description={error}
+                type="error"
+                showIcon
+              />
+            )}
             <Form.Item
               label="Employee Name"
               name="emp_name"
@@ -57,12 +62,14 @@ class SignUp extends Component {
                 { type: "email", message: "Please enter a valid email!" },
               ]}
             >
-              <Input onClick={()=> {
-                this.setState({
-                    error : '',
-                    showError:false
-                })
-              }} />
+              <Input
+                onClick={() => {
+                  this.setState({
+                    error: "",
+                    showError: false,
+                  });
+                }}
+              />
             </Form.Item>
 
             <Form.Item
@@ -122,21 +129,10 @@ class SignUp extends Component {
             <NavLink to="/login">
               <span>Click here to Login..!</span>
             </NavLink>
-            {/* {error && <Card style={{color:"red"}}>{error}</Card>} */}
             <Form.Item>
               <Button type="primary" htmlType="submit">
                 Sign up
               </Button>
-
-              {error && (
-                <Alert
-                  message="Error"
-                  description={error}
-                  type="error"
-                  showIcon
-                  style={{ marginBottom: 16 }}
-                />
-              )}
             </Form.Item>
           </Card>
         </Form>

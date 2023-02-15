@@ -5,9 +5,6 @@ import { NavLink } from "react-router-dom";
 const { Header } = Layout;
 
 class AppBar extends React.Component {
-  // state = {
-  //   // current: "home",
-  // };
 
   render() {
     return (
@@ -17,7 +14,6 @@ class AppBar extends React.Component {
           <Menu
             theme="dark"
             mode="horizontal"
-            // defaultSelectedKeys={[this.state.current]}
             style={{ lineHeight: "55px" }}
           >
             <h1

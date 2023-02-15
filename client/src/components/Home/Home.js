@@ -38,7 +38,6 @@ class Home extends Component {
     this.gettingAllNewsLetter();
   }
   render() {
-    console.log(this.state.newsData);
     const { newsData, isLoading, error } = this.state;
     return (
       <>
@@ -89,6 +88,7 @@ class Home extends Component {
                   style={{
                     width: 350,
                   }}
+                  key={item.id}
                   cover={<img alt="example" src={item.imageUrl} />}
                 >
                   <Meta title={item.title} description={item.description} />

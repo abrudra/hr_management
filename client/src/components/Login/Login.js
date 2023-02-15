@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Input, Button, Card,Alert } from "antd";
+import { Form, Input, Button, Card, Alert } from "antd";
 import "../Login/login.css";
 import { NavLink } from "react-router-dom";
 import { loginEmployee } from "../../APIList";
@@ -15,10 +15,8 @@ class Login extends Component {
   onFinish = async (values) => {
     try {
       const data = await loginEmployee(values);
-      console.log(data);
-    //   this.props.history.push("/");
+      console.log(data)
     } catch (error) {
-      console.log(error);
       this.setState({
         error: error.response.data.message,
       });
@@ -38,6 +36,14 @@ class Login extends Component {
         >
           <Card>
             <h1>Login</h1>
+            {error && (
+              <Alert
+                description={error}
+                type="error"
+                showIcon
+                style={{ marginBottom: 16 }}
+              />
+            )}
             <Form.Item
               label="Employee Email"
               name="emp_email"
@@ -72,16 +78,6 @@ class Login extends Component {
             <NavLink to="/signup">
               <span>Click here to Sign up..!</span>
             </NavLink>
-
-            {error && (
-              <Alert
-                message="Error"
-                description={error}
-                type="error"
-                showIcon
-                style={{ marginBottom: 16 }}
-              />
-            )}
             <Form.Item>
               <Button type="primary" htmlType="submit">
                 Log in

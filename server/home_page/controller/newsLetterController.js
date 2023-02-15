@@ -22,8 +22,6 @@ const addNewsLetter = async (req, res) => {
 };
 
 const getAllNewsLetter = async (req, res) => {
-  // const newsLetter = await NewsLetter.findAll({});
-  // res.status(200).send(newsLetter);
   getAllNewsLetterService(req, res);
 };
 

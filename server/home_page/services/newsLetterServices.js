@@ -28,9 +28,9 @@ const newsLetter = async (info, NewsLetter, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message:"Something went wrong..! Failed to created Data.",
+      message: "Something went wrong..! Failed to created Data.",
       error: error,
-    })
+    });
   }
 };
 
@@ -39,10 +39,10 @@ const getAllNewsLetterService = async (req, res) => {
     const newsLetter = await NewsLetter.findAll({});
     res.status(200).send(newsLetter);
   } catch (error) {
-     res.status(500).json({
-       message: "Something went wrong..! Failed to fetch Data.",
-       error: error,
-     });
+    res.status(500).json({
+      message: "Something went wrong..! Failed to fetch Data.",
+      error: error,
+    });
   }
 };
 
@@ -50,12 +50,18 @@ const getSingleNewsLetterService = async (req, res) => {
   try {
     let id = req.params.id;
     const newsLetter = await NewsLetter.findOne({ where: { id: id } });
-    res.status(200).send(newsLetter);
+    if (newsLetter) {
+      res.status(200).send(newsLetter);
+    } else {
+      res.status(404).json({
+        message: "News letter ID doesn't exist: " + id,
+      });
+    }
   } catch {
-     res.status(500).json({
-       message: "Something went wrong..! Failed to fetch Data.",
-       error: error,
-     });
+    res.status(500).json({
+      message: "Something went wrong..! Failed to fetch Data.",
+      error: error,
+    });
   }
 };
 
@@ -72,15 +78,23 @@ const updateNewsLetterService = async (req, res) => {
     const newsLetter = await NewsLetter.update(req.body, {
       where: { id: id },
     });
-    const newsLetters = await NewsLetter.findOne({where : {id:id}});
-    res.status(200).json({
-      message : "Data updated succesfully..!",
-     updateData : newsLetters,
-    });
-  } catch(error) {
-    res.status(500).json({
-      message : "Data not updated ..Something went wrong.!",
-      errorMessage: error.message,
+    if (newsLetter[0] === 1) {
+      const newsLetters = await NewsLetter.findOne({
+        where: { id: id },
+      });
+      res.status(200).json({
+        message: "Data updated succesfully..!",
+        data: newsLetters,
+      });
+    } else {
+      res.status(404).json({
+        message: "Something went wrong.!",
+        errorMessage: error.message,
+      });
+    }
+  } catch (error) {
+    res.status(404).json({
+      message: "ID doesn't exist.",
     });
   }
 };

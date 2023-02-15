@@ -20,7 +20,6 @@ export const signUpEmployee = async (values) => {
     const data = response.data;
     return data;
   } catch (error) {
-    console.error(error);
     throw error;
   }
 };
@@ -34,7 +33,6 @@ export const loginEmployee = async (values) => {
     const data = response.data;
     return data;
   } catch (error) {
-    console.error(error);
     throw error;
   }
 };

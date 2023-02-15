@@ -4,7 +4,7 @@ const bcryptjs = require("bcryptjs");
 const util = require("util");
 const genSalt = util.promisify(bcryptjs.genSalt);
 const hash = util.promisify(bcryptjs.hash);
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 const signUpServices = async (info, userModel, res) => {
   try {
@@ -13,7 +13,7 @@ const signUpServices = async (info, userModel, res) => {
     });
     if (result) {
       res.status(409).json({
-        message: "Email already exists",
+        message: "Email already exist.",
       });
     } else {
       const salt = await genSalt(10);
@@ -26,7 +26,9 @@ const signUpServices = async (info, userModel, res) => {
         emp_pancard: info.emp_pancard,
         emp_password: hashedPassword,
       });
-      res.status(200).send(userSign);
+      res.status(200).json({
+        message: "User registred succesfully.",
+      });
     }
   } catch (error) {
     res.status(500).json({
@@ -38,7 +40,7 @@ const signUpServices = async (info, userModel, res) => {
 const loginServices = async (req, res) => {
   try {
     const user = await userModel.findOne({
-      where: { emp_email: req.body.emp_email},
+      where: { emp_email: req.body.emp_email },
     });
     if (!user) {
       res.status(401).json({
@@ -62,22 +64,19 @@ const loginServices = async (req, res) => {
       );
       res.status(200).json({
         message: "Authentication successful!",
-        token: token,
+        token,
       });
     } else {
       res.status(401).json({
         message: "Invalid credentials!",
       });
     }
-   
   } catch (error) {
     res.status(500).json({
       message: "Something went wrong!",
+      error: error,
     });
-    console.log(error);
   }
- 
-  
 };
 
 module.exports = {
