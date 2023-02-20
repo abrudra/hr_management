@@ -2,7 +2,11 @@ const db = require("../../models");
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const { signUpServices, loginServices } = require("../services/userServices");
+const {
+  signUpServices,
+  loginServices,
+  getAllemployeeServices,
+} = require("../services/userServices");
 
 const userModel = db.user;
 
@@ -22,7 +26,12 @@ const login = async (req ,res ) =>{
 loginServices (req,res);
 }
 
+const getAllemployee = async ( req , res)=> {
+  getAllemployeeServices (req ,res);
+}
+
 module.exports = {
   signUp,
   login,
+  getAllemployee,
 };

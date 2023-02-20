@@ -1,104 +1,105 @@
 import React, { Component } from "react";
 import { Form, Input, Button, Card, Alert } from "antd";
-import "../SignUp/signup.css";
+import "./signup.css";
 import { NavLink } from "react-router-dom";
-import { signUpEmployee } from "../../APIList";
-// import { Checkbox, Divider } from "antd";
+// import { signUpEmployee } from "../../APIList";
+import { Checkbox, Divider } from "antd";
 
-// const CheckboxGroup = Checkbox.Group;
-// const plainOptions = [
-//   "Employment contract",
-//   "Employee wages",
-//   "Code of Conduct",
-//   "Leave policy",
-//   "Employee provident fund",
-// ];
-// const defaultCheckedList = [
-//   "Employment contract",
-//   "Employee wages",
-//   "Code of Conduct",
-//   "Leave policy",
-// ];
+const CheckboxGroup = Checkbox.Group;
+const plainOptions = [
+  "Employment contract",
+  "Employee wages",
+  "Code of Conduct",
+  "Leave policy",
+  "Employee provident fund",
+];
+const defaultCheckedList = [
+  "Employment contract",
+  "Employee wages",
+  "Code of Conduct",
+  "Leave policy",
+];
 
-// const plainOptionsInvestment = [
-//   "Professional development programs",
-//   "Cross-functional training",
-//   "Process automation",
-//   "A comfortable work atmosphere",
-// ];
-// const defaultCheckedListInvestment = [
-//   "Professional development programs",
-//   "Cross-functional training",
-// ];
+const plainOptionsInvestment = [
+  "Professional development programs",
+  "Cross-functional training",
+  "Process automation",
+  "A comfortable work atmosphere",
+];
+const defaultCheckedListInvestment = [
+  "Professional development programs",
+  "Cross-functional training",
+];
 
 
 class SignUp extends Component {
   constructor() {
     super();
     this.state = {
-      // checkedList: defaultCheckedList,
-      // checkAll: false,
-      // indeterminate: true,
-      // checkedListInvestment: defaultCheckedListInvestment,
-      // checkAllInvestment: false,
-      // indeterminateInvestment: true,
-      error:'',
+      checkedList: defaultCheckedList,
+      checkAll: false,
+      indeterminate: true,
+      checkedListInvestment: defaultCheckedListInvestment,
+      checkAllInvestment: false,
+      indeterminateInvestment: true,
+      error:''
     };
   }
   onFinish = async (values) => {
-    try {
-      const data = await signUpEmployee(values);
-      console.log(data);
-      this.props.history.push("/login");
-    } catch (error) {
-      this.setState({
-        error: error.response.data.message,
-      });
-    }
+    console.log(values)
+    // try {
+    //   const data = await signUpEmployee(values);
+    //   console.log(data);
+    //   this.props.history.push("/login");
+    // } catch (error) {
+    //   this.setState({
+    //     error: error.response.data.message,
+    //   });
+    // }
   };
 
-  // onChange = (list) => {
-  //   this.setState({
-  //     checkedList: list,
-  //     checkAll: list.length === plainOptions.length,
-  //     indeterminate: !!list.length && list.length < plainOptions.length,
-  //   });
-  // };
+  onChange = (list) => {
+    this.setState({
+      checkedList: list,
+      checkAll: list.length === plainOptions.length,
+      indeterminate: !!list.length && list.length < plainOptions.length,
+    });
+  };
 
-  // onCheckAllChange = (e) => {
-  //   this.setState({
-  //     checkedList: e.target.checked ? plainOptions : [],
-  //     checkAll: e.target.checked,
-  //     indeterminate: false,
-  //   });
-  // };
+  onCheckAllChange = (e) => {
+    this.setState({
+      checkedList: e.target.checked ? plainOptions : [],
+      checkAll: e.target.checked,
+      indeterminate: false,
+    });
+  };
 
-  // onChangeInvestment = (list) => {
-  //   this.setState({
-  //     checkedListInvestment: list,
-  //     checkAllInvestment: list.length === plainOptionsInvestment.length,
-  //     indeterminateInvestment:
-  //       !!list.length && list.length < plainOptionsInvestment.length,
-  //   });
-  // };
+  onChangeInvestment = (list) => {
+    this.setState({
+      checkedListInvestment: list,
+      checkAllInvestment: list.length === plainOptionsInvestment.length,
+      indeterminateInvestment:
+        !!list.length && list.length < plainOptionsInvestment.length,
+    });
+  };
 
-  // onCheckAllChangeInvestment = (e) => {
-  //   this.setState({
-  //     checkedListInvestment: e.target.checked ? plainOptionsInvestment : [],
-  //     checkAllInvestment: e.target.checked,
-  //     indeterminateInvestment: false,
-  //   });
-  // };
+  onCheckAllChangeInvestment = (e) => {
+    this.setState({
+      checkedListInvestment: e.target.checked ? plainOptionsInvestment : [],
+      checkAllInvestment: e.target.checked,
+      indeterminateInvestment: false,
+    });
+  };
 
   render() {
     const {
       error,
-      // indeterminate,
-      // checkAll,
-      // checkedList,
-      // indeterminateInvestment,
-      // checkAllInvestment,
-      // checkedListInvestment,
+      indeterminate,
+      checkAll,
+      checkedList,
+      indeterminateInvestment,
+      checkAllInvestment,
+      checkedListInvestment,
     } = this.state;
     return (
       <div className="sign-up">
@@ -165,7 +166,7 @@ class SignUp extends Component {
             >
               <Input />
             </Form.Item>
-            {/* <Form.Item
+            <Form.Item
               label="Employee salary"
               name="salary"
               rules={[
@@ -183,7 +184,7 @@ class SignUp extends Component {
             </Form.Item>
             <Form.Item label="Employee pending leaves" name="emp_leaves">
               <Input defaultValue={27} readOnly />
-            </Form.Item> */}
+            </Form.Item>
             <Form.Item
               label="Employee PAN Card"
               name="emp_pancard"
@@ -210,7 +211,7 @@ class SignUp extends Component {
             >
               <Input.Password />
             </Form.Item>
-            {/* <Form.Item>
+            <Form.Item name="emp_policy">
               <Checkbox
                 indeterminate={indeterminate}
                 onChange={this.onCheckAllChange}
@@ -226,7 +227,7 @@ class SignUp extends Component {
                 onChange={this.onChange}
               />
             </Form.Item>
-            <Form.Item>
+            <Form.Item name="emp_investment">
               <Checkbox
                 indeterminate={indeterminateInvestment}
                 onChange={this.onCheckAllChangeInvestment}
@@ -241,17 +242,17 @@ class SignUp extends Component {
                 value={checkedListInvestment}
                 onChange={this.onChangeInvestment}
               />
-            </Form.Item> */}
-            <span> Already have an account?</span>
-            <br></br>
-            <NavLink to="/login">
-              <span>Click here to Login..!</span>
-            </NavLink>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Sign up
-              </Button>
             </Form.Item>
+            <Form.Item>
+              <span> Already have an account?</span>
+              <br></br>
+              <NavLink to="/login">
+                <span>Click here to Login..!</span>
+              </NavLink>
+            </Form.Item>
+            <Button type="primary" htmlType="submit">
+              Sign up
+            </Button>
           </Card>
         </Form>
       </div>

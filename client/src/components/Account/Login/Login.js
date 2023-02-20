@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Form, Input, Button, Card, Alert } from "antd";
-import "../Login/login.css";
+import { Form, Input, Button, Card, Alert, message } from "antd";
+import "./login.css";
 import { NavLink } from "react-router-dom";
-import { loginEmployee } from "../../APIList";
+import { loginEmployee } from "../../../APIList";
 
 class Login extends Component {
   constructor() {
@@ -15,7 +15,19 @@ class Login extends Component {
   onFinish = async (values) => {
     try {
       const data = await loginEmployee(values);
-      console.log(data)
+      console.log(data);
+      if (data.data.emp_email === "demo121@gmail.com") {
+        message.success("Login successfully! as HR admin");
+        localStorage.setItem("token", data.token);
+         localStorage.setItem(
+           "loggedInUser",
+           JSON.stringify(true)
+         );
+        this.props.history.push("/hr");
+      } else {
+        message.success("Login successfully! as employee");
+        this.props.history.push("/employee");
+      }
     } catch (error) {
       this.setState({
         error: error.response.data.message,
@@ -45,7 +57,7 @@ class Login extends Component {
               />
             )}
             <Form.Item
-              label="Employee Email"
+              label="Email"
               name="emp_email"
               rules={[{ required: true, message: "Please input your email!" }]}
             >
@@ -73,11 +85,13 @@ class Login extends Component {
                 }}
               />
             </Form.Item>
-            <span>New here?</span>
-            <br></br>
-            <NavLink to="/signup">
-              <span>Click here to Sign up..!</span>
-            </NavLink>
+            <Form.Item>
+              <span>New here?</span>
+              <br></br>
+              <NavLink to="/signup">
+                <span>Click here to Sign up..!</span>
+              </NavLink>
+            </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit">
                 Log in

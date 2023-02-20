@@ -65,6 +65,7 @@ const loginServices = async (req, res) => {
       res.status(200).json({
         message: "Authentication successful!",
         token,
+        data:user,
       });
     } else {
       res.status(401).json({
@@ -79,7 +80,21 @@ const loginServices = async (req, res) => {
   }
 };
 
+
+const getAllemployeeServices = async(req,res) =>{
+  try {
+    const employeeData = await userModel.findAll({});
+    res.status(200).send(employeeData);
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong..! Failed to fetch Data.",
+      error: error,
+    });
+  }
+}
+
 module.exports = {
   signUpServices,
   loginServices,
+  getAllemployeeServices,
 };

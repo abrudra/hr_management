@@ -1,8 +1,8 @@
-import { Card, Button} from "antd";
+import { Card, Button } from "antd";
 import { NavLink } from "react-router-dom";
 
 const ButtonLogin = () => {
-    return(
+  return (
     <>
       <div className="home-login-select">
         <Card
@@ -13,7 +13,9 @@ const ButtonLogin = () => {
             marginTop: "5rem",
           }}
         >
-          <Button type="dashed">Login</Button>
+          <NavLink to="/login">
+            <Button type="dashed">Login</Button>
+          </NavLink>
         </Card>
         <Card
           title="Employee Desk"
@@ -38,7 +40,8 @@ const ButtonLogin = () => {
           </div>
         </Card>
       </div>
-    </>)
+    </>
+  );
 };
 
 export default ButtonLogin;
