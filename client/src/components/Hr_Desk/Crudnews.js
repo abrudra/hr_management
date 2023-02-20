@@ -1,58 +1,75 @@
 import React, { Component } from "react";
-import { Form, Input, Button, message, Card } from "antd";
+import { Form, Input, Button, message, Card, Popconfirm } from "antd";
 import "./hrdesk.css";
-import { gettingemployeeById } from "../../APIList";
+import { getNewsById, updateNewsById, deleteByID } from "../../APIList";
 import Loading from "../Loader/Loading";
 
 class Crudnews extends Component {
-
-    constructor(){
-        super()
-        this.state = {
-            getIdError : "",
-            empDataById : [],
-            isLoading: false,
-        }
-    }
-//   onFinish = async (values) => {
-//     console.log(values);
-//     try {
-//       const token = localStorage.getItem("token");
-//       const data = await addNewsLetter(values, token);
-//       console.log(data);
-//       message.success("Newsletter added successfully!");
-//       this.formRef.current.resetFields();
-//     } catch (error) {
-//       this.setState({
-//         error: error.response.data.message,
-//       });
-//     }
-//   };
-  
-componentDidMount(){
-    this.gettingemployeeById();
-}
-  gettingemployeeById = async (id) => {
-     try {
-    const id = this.props.param.match.id;
-       const token = localStorage.getItem("token");
-       const data = await gettingemployeeById(id, token);
-       this.setState({
-         empDataById: data,
-         isLoading: false,
-       });
-       console.log(data);
-       message.success("Newsletter updated successfully!");
-    //    this.formRef.current.resetFields();
-     } catch (error) {
-       this.setState({
-         getIdError: error.response.data.message,
-       });
-     }
+  constructor() {
+    super();
+    this.state = {
+      getIdError: "",
+      newsById: [],
+      isLoading: false,
+    };
   }
 
+  onFinish = async (values) => {
+    try {
+      const id = this.props.match.params.id;
+      const token = localStorage.getItem("token");
+      const data = await updateNewsById(id, values, token);
+      message.success("Newsletter updated successfully!");
+      this.formRef.current.resetFields();
+    } catch (error) {
+      this.setState({
+        getIdError: error.response.data.message,
+      });
+    }
+  };
+
+  componentDidMount() {
+    this.getNewsById();
+  }
+
+  getNewsById = async (id) => {
+    try {
+      const id = this.props.match.params.id;
+      const token = localStorage.getItem("token");
+      const data = await getNewsById(id, token);
+      this.setState({
+        newsById: data,
+        isLoading: false,
+      });
+      message.success("Newsletter retrieved successfully!");
+    } catch (error) {
+      this.setState({
+        getIdError: error.response.data.message,
+      });
+    }
+  };
+
+  handleDelete = async () => {
+    try {
+      const id = this.props.match.params.id;
+      const token = localStorage.getItem("token");
+      const data = await deleteByID(id, token);
+      this.setState({
+        newsById: data,
+        isLoading: false,
+      });
+      message.success("Newsletter deleted successfully!");
+      this.props.history.push("/hr")
+    } catch (error) {
+      this.setState({
+        getIdError: error.response.data.message,
+      });
+    }
+  };
+
   render() {
-    const {isLoading ,getIdError , empDataById} = this.state;
+    const { isLoading, getIdError, newsById } = this.state;
+    console.log(typeof newsById);
     return (
       <div className="cardaddnews">
         <Form
@@ -72,55 +89,19 @@ componentDidMount(){
                 {getIdError}
               </div>
             ) : (
-              empDataById.map((item) => (
+              newsById.map((item) => (
                 <>
-                  <Form.Item
-                    label="Title"
-                    name="title"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter a title",
-                      },
-                    ]}
-                  >
-                    <Input placeholder={item.title} />
+                  <Form.Item label="Title" name="title" key={item.id}>
+                    <Input defaultValue={item.title} />
                   </Form.Item>
-                  <Form.Item
-                    label="Image URL"
-                    name="imageUrl"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please provide an image URL",
-                      },
-                    ]}
-                  >
-                    <Input placeholder={item.imageUrl} />
+                  <Form.Item label="Image URL" name="imageUrl">
+                    <Input defaultValue={item.imageUrl} />
                   </Form.Item>
-                  <Form.Item
-                    label="Description"
-                    name="description"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please provide a description",
-                      },
-                    ]}
-                  >
-                    <Input.TextArea placeholder={item.description} rows={4} />
+                  <Form.Item label="Description" name="description">
+                    <Input.TextArea defaultValue={item.description} rows={4} />
                   </Form.Item>
-                  <Form.Item
-                    label="Author"
-                    name="author"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please provide author name",
-                      },
-                    ]}
-                  >
-                    <Input placeholder={item.author} />
+                  <Form.Item label="Author" name="author">
+                    <Input defaultValue={item.author} />
                   </Form.Item>
                 </>
               ))
@@ -128,8 +109,18 @@ componentDidMount(){
 
             <Form.Item>
               <Button type="primary" htmlType="submit">
-                Update
+                UPDATE
               </Button>
+              <Popconfirm
+                title="Are you sure you want to delete this News?"
+                onConfirm={this.handleDelete}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button type="primary" danger>
+                  Delete
+                </Button>
+              </Popconfirm>
             </Form.Item>
           </Card>
         </Form>

@@ -18,7 +18,6 @@ class Addnews extends Component {
     try {
       const token = localStorage.getItem("token");
       const data = await addNewsLetter(values,token);
-      console.log(data);
       message.success("Newsletter added successfully!");
       this.formRef.current.resetFields();
     } catch (error) {

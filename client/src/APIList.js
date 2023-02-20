@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 
 export const gettingAllNewsLetter = async () => {
   try {
@@ -11,7 +11,7 @@ export const gettingAllNewsLetter = async () => {
   }
 };
 
-export const addNewsLetter = async (value,token) => {
+export const addNewsLetter = async (value, token) => {
   try {
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -66,16 +66,60 @@ export const loginEmployee = async (values) => {
   }
 };
 
-export const gettingemployeeById = async (id,token) => {
+export const getNewsById = async (id, token) => {
   try {
-     const headers = {
-       Authorization: `Bearer ${token}`,
-       "Content-Type": "application/json",
-     };
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
     const response = await axios.get(
-      `http://localhost:8081/user/${id}`,{headers}
+      `http://localhost:8081/api/newsLetter/${id}`,
+      {
+        headers,
+      }
     );
-    return response.data;
+    const data = response.data;
+    return [data];
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateNewsById = async (id, values,token) => {
+  try {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+    const response = await axios.put(
+      `http://localhost:8081/api/newsLetter/${id}`,values,
+      {
+        headers,
+      }
+    );
+    const data = response.data;
+    return [data];
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
+export const deleteByID = async (id, token) => {
+  try {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+    const response = await axios.delete(
+      `http://localhost:8081/api/newsLetter/${id}`,
+      {
+        headers,
+      }
+    );
+    const data = response.data;
+    return [data];
   } catch (error) {
     throw error;
   }

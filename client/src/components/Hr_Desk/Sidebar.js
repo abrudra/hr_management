@@ -58,7 +58,6 @@ class Sidebar extends React.Component {
 
   render() {
     const { newsData, error, isLoading, empData } = this.state;
-    console.log(empData);
     return (
       <Sider width={200} style={{ background: "#fff" }}>
         <Menu

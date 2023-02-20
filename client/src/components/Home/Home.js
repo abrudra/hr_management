@@ -38,7 +38,6 @@ class Home extends Component {
   }
   render() {
     const { newsData, isLoading, error } = this.state;
-    console.log(newsData);
     return (
       <>
         <ButtonLogin />
