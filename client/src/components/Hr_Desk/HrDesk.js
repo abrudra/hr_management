@@ -8,6 +8,7 @@ class HrDesk extends Component{
         return (
           <div className="hrmain" >
             <Sidebar></Sidebar>
+            
           </div>
         );
     }

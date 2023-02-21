@@ -4,6 +4,7 @@ import SignUp from "../Account/SignUp/SignUp";
 import HrDesk from "../Hr_Desk/HrDesk";
 import Addnews from "../Hr_Desk/Addnews";
 import Crudnews from "../Hr_Desk/Crudnews";
+import Pagenotfound from "../Pagenotfound";
 
 class Route {
   constructor({ path, component, title, exact = true, authRequired = true }) {
@@ -50,6 +51,12 @@ const routes = [
     title: "CrudNews",
     component: Crudnews,
     authRequired: true,
+  }),
+  new Route({
+    path: "*",
+    title: "PageNotFound",
+    component: Pagenotfound,
+    authRequired: false,
   }),
 ];
 

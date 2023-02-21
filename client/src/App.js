@@ -69,23 +69,3 @@ class App extends Component {
 
 export default App;
 
-
-// class App extends Component {
-//   render() {
-//     return (
-//       <>
-//         <AppBar />
-//         <Switch>
-//           <Route exact path="/" component={Home} />
-//           <Route exact path="/login" component={Login} />
-//           <Route exact path="/signup" component={SignUp} />
-//           <Route exact path="/hr" component={HrDesk} />
-//           <Route exact path="/hr/addnewnews" component={Addnews} />
-//           <Route exact path="/hr/:id" component={Crudnews} />
-//         </Switch>
-//       </>
-//     );
-//   }
-// }
-
-// export default App;

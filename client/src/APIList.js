@@ -1,9 +1,11 @@
 import axios from "axios";
 
+const apibase = process.env.REACT_APP_BASE_URL;
+
 export const gettingAllNewsLetter = async () => {
   try {
     const response = await axios.get(
-      `http://localhost:8081/api/newsLetter/getAllNewsLetter`
+      `${apibase}/api/newsLetter/getAllNewsLetter`
     );
     return response.data;
   } catch (error) {
@@ -18,7 +20,7 @@ export const addNewsLetter = async (value, token) => {
       "Content-Type": "application/json",
     };
     const response = await axios.post(
-      `http://localhost:8081/api/newsLetter/addNewsLetter`,
+      `${apibase}/api/newsLetter/addNewsLetter`,
       value,
       { headers }
     );
@@ -31,9 +33,7 @@ export const addNewsLetter = async (value, token) => {
 
 export const gettingAllEmployee = async () => {
   try {
-    const response = await axios.get(
-      `http://localhost:8081/user/getAllEmployee`
-    );
+    const response = await axios.get(`${apibase}/user/getAllEmployee`);
     return response.data;
   } catch (error) {
     throw error;
@@ -42,10 +42,7 @@ export const gettingAllEmployee = async () => {
 
 export const signUpEmployee = async (values) => {
   try {
-    const response = await axios.post(
-      "http://localhost:8081/user/signUp",
-      values
-    );
+    const response = await axios.post(`${apibase}/user/signUp`, values);
     const data = response.data;
     return data;
   } catch (error) {
@@ -55,10 +52,7 @@ export const signUpEmployee = async (values) => {
 
 export const loginEmployee = async (values) => {
   try {
-    const response = await axios.post(
-      "http://localhost:8081/user/login",
-      values
-    );
+    const response = await axios.post(`${apibase}/user/login`, values);
     const data = response.data;
     return data;
   } catch (error) {
@@ -72,12 +66,9 @@ export const getNewsById = async (id, token) => {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     };
-    const response = await axios.get(
-      `http://localhost:8081/api/newsLetter/${id}`,
-      {
-        headers,
-      }
-    );
+    const response = await axios.get(`${apibase}/api/newsLetter/${id}`, {
+      headers,
+    });
     const data = response.data;
     return [data];
   } catch (error) {
@@ -92,7 +83,8 @@ export const updateNewsById = async (id, values,token) => {
       "Content-Type": "application/json",
     };
     const response = await axios.put(
-      `http://localhost:8081/api/newsLetter/${id}`,values,
+      `${apibase}/api/newsLetter/${id}`,
+      values,
       {
         headers,
       }
@@ -112,12 +104,9 @@ export const deleteByID = async (id, token) => {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     };
-    const response = await axios.delete(
-      `http://localhost:8081/api/newsLetter/${id}`,
-      {
-        headers,
-      }
-    );
+    const response = await axios.delete(`${apibase}/api/newsLetter/${id}`, {
+      headers,
+    });
     const data = response.data;
     return [data];
   } catch (error) {

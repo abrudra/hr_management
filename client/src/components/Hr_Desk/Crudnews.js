@@ -18,7 +18,7 @@ class Crudnews extends Component {
     try {
       const id = this.props.match.params.id;
       const token = localStorage.getItem("token");
-      const data = await updateNewsById(id, values, token);
+      await updateNewsById(id, values, token);
       message.success("Newsletter updated successfully!");
       this.formRef.current.resetFields();
     } catch (error) {
@@ -59,7 +59,7 @@ class Crudnews extends Component {
         isLoading: false,
       });
       message.success("Newsletter deleted successfully!");
-      this.props.history.push("/hr")
+      this.props.history.push("/hr");
     } catch (error) {
       this.setState({
         getIdError: error.response.data.message,
@@ -69,7 +69,6 @@ class Crudnews extends Component {
 
   render() {
     const { isLoading, getIdError, newsById } = this.state;
-    console.log(typeof newsById);
     return (
       <div className="cardaddnews">
         <Form
@@ -108,19 +107,21 @@ class Crudnews extends Component {
             )}
 
             <Form.Item>
-              <Button type="primary" htmlType="submit">
-                UPDATE
-              </Button>
-              <Popconfirm
-                title="Are you sure you want to delete this News?"
-                onConfirm={this.handleDelete}
-                okText="Yes"
-                cancelText="No"
-              >
-                <Button type="primary" danger>
-                  Delete
+              <div className="buttoncrud">
+                <Button type="primary" htmlType="submit">
+                  UPDATE
                 </Button>
-              </Popconfirm>
+                <Popconfirm
+                  title="Are you sure you want to delete this News?"
+                  onConfirm={this.handleDelete}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Button type="primary" danger>
+                    Delete
+                  </Button>
+                </Popconfirm>
+              </div>
             </Form.Item>
           </Card>
         </Form>

@@ -59,40 +59,58 @@ class Sidebar extends React.Component {
   render() {
     const { newsData, error, isLoading, empData } = this.state;
     return (
-      <Sider width={200} style={{ background: "#fff" }}>
-        <Menu
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          defaultOpenKeys={["sub1"]}
-          style={{ height: "100%", borderRight: 0 }}
-        >
-          <Menu.SubMenu key="sub1" title="Employee details">
-            {isLoading && <Loading />}
-            {error ? (
-              <div style={{ color: "red", fontWeight: "bold" }}>{error}</div>
-            ) : (
-              empData.map((item) => (
-                <Menu.Item key={item.id}>{item.emp_name}</Menu.Item>
-              ))
-            )}
-          </Menu.SubMenu>
-          <Menu.SubMenu key="sub2" title="News update">
-            <NavLink to="/hr/addnewnews">
-              <Menu.Item key="0">Add new news</Menu.Item>
-            </NavLink>
-            {isLoading && <Loading />}
-            {error ? (
-              <div style={{ color: "red", fontWeight: "bold" }}>{error}</div>
-            ) : (
-              newsData.map((item) => (
-                <NavLink to={`/hr/${item.id}`} style={{textDecoration:'none' ,color:"black"}}>
-                  <Menu.Item key={item.id}>{item.title}</Menu.Item>
-                </NavLink>
-              ))
-            )}
-          </Menu.SubMenu>
-        </Menu>
-      </Sider>
+      <>
+        <Sider width={200} style={{ background: "white" }}>
+          <Menu
+            mode="inline"
+            defaultSelectedKeys={["1"]}
+            style={{ height: "100%", borderRight: 0 }}
+          >
+            <Menu.SubMenu key="sub1" title="Employee details">
+              {isLoading && <Loading />}
+              {error ? (
+                <div style={{ color: "red", fontWeight: "bold" }}>{error}</div>
+              ) : (
+                empData.map((item) => (
+                  <Menu.Item key={item.id}>{item.emp_name}</Menu.Item>
+                ))
+              )}
+            </Menu.SubMenu>
+            <Menu.SubMenu key="sub2" title="News update">
+              <NavLink to="/hr/addnewnews">
+                <Menu.Item>Add new news</Menu.Item>
+              </NavLink>
+              {isLoading && <Loading />}
+              {error ? (
+                <div style={{ color: "red", fontWeight: "bold" }}>{error}</div>
+              ) : (
+                newsData.map((item) => (
+                  <NavLink
+                    to={`/hr/${item.id}`}
+                    key={item.id}
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <Menu.Item key={item.id}>{item.title}</Menu.Item>
+                  </NavLink>
+                ))
+              )}
+            </Menu.SubMenu>
+            <Menu.Item key="3">Holiday</Menu.Item>
+            <Menu.Item
+              key="4"
+              onClick={() => {
+                localStorage.clear();
+                window.location.href = "/login";
+              }}
+            >
+              Sign Out
+            </Menu.Item>
+          </Menu>
+        </Sider>
+        <div className="hrcomponent">
+          <h2>Welcome To HR admin pannel.</h2>
+        </div>
+      </>
     );
   }
 }
