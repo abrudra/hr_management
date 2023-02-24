@@ -40,8 +40,14 @@ class Home extends Component {
     const { newsData, isLoading, error } = this.state;
     return (
       <>
-        <ButtonLogin />
-        <Divider orientation="left">HR Desk updates.!</Divider>
+        {localStorage.length === 0 ? <ButtonLogin /> : null}
+
+        <Divider
+          style={{ marginTop: localStorage.length === 0 ? null : "0" }}
+          orientation="left"
+        >
+          HR Desk updates.!
+        </Divider>
         <div className="hr-news">
           {isLoading && <Loading />}
           {error ? (
@@ -50,6 +56,7 @@ class Home extends Component {
             newsData.map((item) => (
               <CardNews
                 key={item.id}
+                id={item.id}
                 imageUrl={item.imageUrl}
                 title={item.title}
                 description={item.description}

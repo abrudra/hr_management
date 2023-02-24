@@ -25,19 +25,27 @@
 max-width: 50%;
 }
 
-.hrmain{
-  display: flex;
-}
-
-.hrcomponent{
-  background: rgb(192, 203, 212);
-  width: 100vw;
-  height: 100vh;
-  padding-left: 400px;
-  padding-top: 250px;
-}
-
 .buttoncrud{
   display: flex;
   column-gap: 2rem;
+}
+
+.hrmenu{
+  height: 100%
+}
+
+.employeetable{
+  padding: 1%;
+}
+
+.employee-add-empbutton{
+  width: 14%;
+}
+
+.employeemain{
+  padding: 1%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1%;
 }

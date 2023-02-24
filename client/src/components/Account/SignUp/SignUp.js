@@ -101,7 +101,7 @@ class SignUp extends Component {
       // checkedListInvestment,
     } = this.state;
     return (
-      <div className="sign-up">
+      <div className={localStorage.length === 0 ? "sign-up" : null}>
         <Form
           name="signup"
           onFinish={this.onFinish}
@@ -111,7 +111,7 @@ class SignUp extends Component {
           style={{ maxWidth: 550, margin: "0 auto" }}
         >
           <Card>
-            <h1>Sign Up</h1>
+            {localStorage.length === 0 ? <h1>Sign Up</h1> : null}
             {error && <Alert description={error} type="error" showIcon />}
             <Form.Item
               label="Employee Name"
@@ -244,13 +244,17 @@ class SignUp extends Component {
                 onChange={this.onChangeInvestment}
               />
             </Form.Item> */}
-            <Form.Item>
-              <span> Already have an account?</span>
-              <br></br>
-              <NavLink to="/login">
-                <span>Click here to Login..!</span>
-              </NavLink>
-            </Form.Item>
+            {localStorage.length === 0 ? (
+              <>
+                <Form.Item>
+                  <span> Already have an account?</span>
+                  <br></br>
+                  <NavLink to="/login">
+                    <span>Click here to Login..!</span>
+                  </NavLink>
+                </Form.Item>
+              </>
+            ) : null}
             <Button type="primary" htmlType="submit">
               Sign up
             </Button>

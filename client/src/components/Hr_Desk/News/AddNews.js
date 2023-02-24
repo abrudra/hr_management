@@ -1,24 +1,29 @@
-import React, { Component } from "react";
-import { Form, Input, Button, message, Card, Alert } from "antd";
-import "./hrdesk.css";
-import { addNewsLetter } from "../../APIList";
+import { Component } from "react";
+import { Button, message } from "antd";
+import { addNewsLetter } from "../../../APIList";
+import { Form, Input, Card, Alert, Modal } from "antd";
 
-class Addnews extends Component {
+class AddNews extends Component {
   constructor() {
     super();
     this.state = {
       error: "",
+      isModalOpen: false,
     };
   }
-
-  formRef = React.createRef();
 
   onFinish = async (values) => {
     console.log(values);
     try {
       const token = localStorage.getItem("token");
-      await addNewsLetter(values,token);
+      await addNewsLetter(values, token);
       message.success("Newsletter added successfully!");
+      this.setState({
+        isModalOpen: false,
+      });
+      setTimeout(() => {
+        window.location.href = "/hr";
+      }, "1000");
       this.formRef.current.resetFields();
     } catch (error) {
       this.setState({
@@ -27,24 +32,44 @@ class Addnews extends Component {
     }
   };
 
+  showModal = () => {
+    this.setState({
+      isModalOpen: true,
+    });
+  };
+
+  handleCancel = () => {
+    this.setState({
+      isModalOpen: false,
+    });
+  };
+
   onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   render() {
     const { error } = this.state;
     return (
-      <div className="cardaddnews">
+      <>
+        <Button className="employee-add-empbutton" onClick={this.showModal}>
+          Add News letter
+        </Button>
+        <Modal
+          title="Add news"
+          open={this.state.isModalOpen}
+          footer={null}
+          onCancel={this.handleCancel}
+        >
+         <div >
         <Form
           ref={this.formRef}
           name="newsletterForm"
           onFinish={this.onFinish}
           layout="vertical"
-          className="formaaddnews"
+          
         >
           <Card>
-            <Form.Item>
-              <h2>Add new news letter</h2>
-            </Form.Item>
             {error && <Alert description={error} type="error" showIcon />}
             <Form.Item
               label="Title"
@@ -102,8 +127,10 @@ class Addnews extends Component {
           </Card>
         </Form>
       </div>
+        </Modal>
+      </>
     );
   }
 }
 
-export default Addnews;
+export default AddNews;

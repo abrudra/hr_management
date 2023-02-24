@@ -113,3 +113,69 @@ export const deleteByID = async (id, token) => {
     throw error;
   }
 };
+
+export const updateEmployeeByID = async (id, values, token) => {
+  try {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+    const response = await axios.put(
+      `${apibase}/user/${id}`,
+      values,
+      {
+        headers,
+      }
+    );
+    const data = response.data;
+    return [data];
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+export const deleteEmployeeById = async (id, token) => {
+  try {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+    const response = await axios.delete(`${apibase}/user/${id}`, {
+      headers,
+    });
+    const data = response.data;
+    return [data];
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getEmployeeById = async (id, token) => {
+  try {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+    const response = await axios.get(`${apibase}/user/${id}`, {
+      headers,
+    });
+    const data = response.data;
+    return [data];
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getHolidayList = async () => {
+  const response = await fetch(
+    `https://calendarific.com/api/v2/holidays?&api_key=0f9c36d648e57450e94cd34d77508fc3274f666a&country=IN&year=2023`
+  );
+  const data = await response.json();
+  const formattedData = data.response.holidays.map((holiday, index) => ({
+    index: index + 1,
+    name: holiday.name,
+    date: holiday.date.iso,
+  }));
+  return formattedData;
+};

@@ -2,9 +2,8 @@ import Home from "../Home/Home";
 import Login from "../Account/Login/Login";
 import SignUp from "../Account/SignUp/SignUp";
 import HrDesk from "../Hr_Desk/HrDesk";
-import Addnews from "../Hr_Desk/Addnews";
-import Crudnews from "../Hr_Desk/Crudnews";
 import Pagenotfound from "../Pagenotfound";
+import EmployeeInfo from "../Employee/EmployeeInfo";
 
 class Route {
   constructor({ path, component, title, exact = true, authRequired = true }) {
@@ -41,17 +40,12 @@ const routes = [
     authRequired: true,
   }),
   new Route({
-    path: "/hr/addnewnews",
-    title: "AddNews",
-    component: Addnews,
+    path: "/employee",
+    title: "EmployeeInfo",
+    component: EmployeeInfo,
     authRequired: true,
   }),
-  new Route({
-    path: "/hr/:id",
-    title: "CrudNews",
-    component: Crudnews,
-    authRequired: true,
-  }),
+
   new Route({
     path: "*",
     title: "PageNotFound",

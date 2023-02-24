@@ -8,9 +8,6 @@ import {
   Redirect,
 } from "react-router-dom";
 
-
-
-
 const AuthRoute = ({ component: Component, title, ...rest }) => {
   const token = localStorage.getItem("loggedInUser");
 

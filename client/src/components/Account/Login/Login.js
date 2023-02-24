@@ -15,7 +15,6 @@ class Login extends Component {
   onFinish = async (values) => {
     try {
       const data = await loginEmployee(values);
-      console.log(data);
       if (data.data.emp_email === "demo121@gmail.com") {
         message.success("Login successfully! as HR admin");
         localStorage.setItem("token", data.token);

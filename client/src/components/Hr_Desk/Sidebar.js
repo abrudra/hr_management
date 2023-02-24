@@ -1,116 +1,56 @@
 import React from "react";
 import { Layout, Menu } from "antd";
-import { gettingAllNewsLetter, gettingAllEmployee } from "../../APIList";
-import Loading from "../Loader/Loading";
-import { NavLink } from "react-router-dom";
+import EmployeeDetails from "./Employee/Employee";
+import NewsData from "./News/News";
+import HolidayList from "./Holiday/Holiday";
 
-const { Sider } = Layout;
+const { Sider, Content } = Layout;
 
 class Sidebar extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
-      isLoading: false,
-      error: "",
-      newsData: [],
-      empData: [],
+      selectedMenuItem: null,
     };
   }
 
-  gettingAllNewsLetter = async () => {
-    this.setState({
-      isLoading: true,
-    });
-    try {
-      const response = await gettingAllNewsLetter();
-      this.setState({
-        newsData: response,
-        isLoading: false,
-      });
-    } catch (error) {
-      this.setState({
-        error: "Failed while fetching data..!" + error.message,
-      });
-    }
+  handleMenuClick = (e) => {
+    this.setState({ selectedMenuItem: e.key });
   };
-
-  gettingAllEmployee = async () => {
-    this.setState({
-      isLoading: true,
-    });
-    try {
-      const response = await gettingAllEmployee();
-      this.setState({
-        empData: response,
-        isLoading: false,
-      });
-    } catch (error) {
-      this.setState({
-        error: "Failed while fetching data..!" + error.message,
-      });
-    }
-  };
-
-  componentDidMount() {
-    this.gettingAllNewsLetter();
-    this.gettingAllEmployee();
+  componentDidMount() { 
+    this.setState({ selectedMenuItem: "employee" });
   }
+  signOutHandler = () => {
+    localStorage.clear();
+    window.location.href = "/login"
+  };
 
   render() {
-    const { newsData, error, isLoading, empData } = this.state;
     return (
-      <>
-        <Sider width={200} style={{ background: "white" }}>
+      <Layout>
+        <Sider>
           <Menu
+            onClick={this.handleMenuClick}
+            theme="dark"
             mode="inline"
-            defaultSelectedKeys={["1"]}
-            style={{ height: "100%", borderRight: 0 }}
+            defaultSelectedKeys={["employee"]}
+            className="hrmenu"
           >
-            <Menu.SubMenu key="sub1" title="Employee details">
-              {isLoading && <Loading />}
-              {error ? (
-                <div style={{ color: "red", fontWeight: "bold" }}>{error}</div>
-              ) : (
-                empData.map((item) => (
-                  <Menu.Item key={item.id}>{item.emp_name}</Menu.Item>
-                ))
-              )}
-            </Menu.SubMenu>
-            <Menu.SubMenu key="sub2" title="News update">
-              <NavLink to="/hr/addnewnews">
-                <Menu.Item>Add new news</Menu.Item>
-              </NavLink>
-              {isLoading && <Loading />}
-              {error ? (
-                <div style={{ color: "red", fontWeight: "bold" }}>{error}</div>
-              ) : (
-                newsData.map((item) => (
-                  <NavLink
-                    to={`/hr/${item.id}`}
-                    key={item.id}
-                    style={{ textDecoration: "none", color: "black" }}
-                  >
-                    <Menu.Item key={item.id}>{item.title}</Menu.Item>
-                  </NavLink>
-                ))
-              )}
-            </Menu.SubMenu>
-            <Menu.Item key="3">Holiday</Menu.Item>
-            <Menu.Item
-              key="4"
-              onClick={() => {
-                localStorage.clear();
-                window.location.href = "/login";
-              }}
-            >
+            <Menu.Item key="employee">Employee Details</Menu.Item>
+            <Menu.Item key="news">News Update</Menu.Item>
+            <Menu.Item key="holiday">Holiday</Menu.Item>
+            <Menu.Item key="signout" onClick={this.signOutHandler}>
               Sign Out
             </Menu.Item>
           </Menu>
         </Sider>
-        <div className="hrcomponent">
-          <h2>Welcome To HR admin pannel.</h2>
-        </div>
-      </>
+        <Content>
+          {this.state.selectedMenuItem === "employee" && <EmployeeDetails />}
+          {this.state.selectedMenuItem === "news" && <NewsData />}
+          {this.state.selectedMenuItem === "holiday" && <HolidayList/>}
+        </Content>
+      </Layout>
     );
   }
 }
